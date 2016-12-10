@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_accelormeter__data"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.sean.accelerometer.Accelormeter_Data">
+-->
+    <!-- Start of application display-->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/activity_accelormeter__data"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#ffffff"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingTop="20dp"
+    tools:context="com.sean.accelerometer.Accelormeter_Data">
+
+    <!-- max acceleration  label -->
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginBottom="10dp"
+    android:text="Max Acceleration:"
+    android:textSize="20sp"
+        tools:ignore="HardcodedText" />
+    <!--end of max acceleration label-->
+
+    <!--max acceleration x-axis label-->
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="20dp"
+    android:text="Max Acceleration: X-Axis"
+    android:textSize="15sp"
+        tools:ignore="HardcodedText" />
+    <!-- end max acceleration x-axis label-->
+
+    <!-- maxX output label -->
+    <TextView
+    android:id="@+id/maxX"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="10dp"
+    android:text="0.0"
+    android:textSize="20sp"
+        tools:ignore="HardcodedText" />
+    <!-- end of maxX output -->
+
+    <!-- max acceleration y-axis -->
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="20dp"
+    android:text="Max Acceleration: Y-Axis"
+    android:textSize="15sp"
+        tools:ignore="HardcodedText" />
+<!-- end max acceleration y-axis-->
+
+    <!-- maxY output-->
+    <TextView
+    android:id="@+id/maxY"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="10dp"
+    android:text="0.0"
+    android:textSize="20sp"
+        tools:ignore="HardcodedText" />
+    <!-- end maxY output-->
+
+    <!-- max acceleration z-axis-->
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="20dp"
+    android:text="Max Acceleration: Z-Axis"
+    android:textSize="15sp"
+        tools:ignore="HardcodedText" />
+    <!-- end max acceleration: z-axis-->
+
+    <!-- maxZ output-->
+    <TextView
+    android:id="@+id/maxZ"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginTop="10dp"
+    android:text="0.0"
+    android:textSize="20sp"
+        tools:ignore="HardcodedText" />
+    <!-- end maxZ output-->
+
+    <!-- current acceleration label-->
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="30dp"
+    android:text="Current Acceleration:"
+    android:textSize="20sp"
+        tools:ignore="HardcodedText" />
+    <!-- end current acceleration label -->
+
+    <!-- begin horizontal section -->
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:gravity="center|top"
+    android:orientation="horizontal"
+        tools:ignore="DisableBaselineAlignment">
+
+        <!-- begin x-axis section-->
+        <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.33"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+            <!-- x-axis label -->
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="X-Axis"
+            android:textSize="15sp"
+                tools:ignore="HardcodedText" />
+            <!-- x-axis label-->
+
+            <!-- currentX output-->
+            <TextView
+            android:id="@+id/currentX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="0.0"
+            android:textSize="15sp"
+                tools:ignore="HardcodedText" />
+            <!-- end currentX output -->
+
+        </LinearLayout>
+        <!-- end of x-axis section-->
+
+            <!-- y-axis section -->
+             <LinearLayout
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="0.33"
+             android:background="#ffffff"
+             android:gravity="center"
+             android:orientation="vertical" >
+
+                 <!-- y-axis label-->
+                 <TextView
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:layout_marginTop="10dp"
+                 android:text="Y-Axis"
+                 android:textSize="15sp"
+                     tools:ignore="HardcodedText" />
+                 <!-- end y-axis label -->
+
+                 <!-- currentY output-->
+                 <TextView
+                 android:id="@+id/currentY"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:layout_marginTop="10dp"
+                 android:text="0.0"
+                 android:textSize="15sp"
+                     tools:ignore="HardcodedText" />
+                 <!-- end of currentY output-->
+
+             </LinearLayout>
+                <!-- end of y-axis section -->
+
+            <!-- z-axis section -->
+        <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.33"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+            <!-- z-axis label -->
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Z-Axis"
+            android:textSize="15sp"
+                tools:ignore="HardcodedText" />
+            <!-- end of z-axis label -->
+
+                <!-- currentZ output -->
+            <TextView
+            android:id="@+id/currentZ"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="0.0"
+            android:textSize="15sp"
+                tools:ignore="HardcodedText" />
+            <!-- end currentZ output -->
+
+            </LinearLayout>
+            <!-- end z-axis section -->
+         </LinearLayout>
+        <!-- end horizontal section -->
+</LinearLayout>
+<!-- end of Application Display-->
+
+<!--</RelativeLayout>-->
