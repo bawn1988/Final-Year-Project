@@ -22,26 +22,17 @@ import java.io.IOException;
 
 //https://examples.javacodegeeks.com/android/core/hardware/sensor/android-accelerometer-example/
 public class Accelerometer extends Activity implements SensorEventListener {
-    private float lastX, lastY, lastZ;
+    private float accelerationValueX, accelerationValueY, accelerationValueZ;
 
-    private SensorManager sensorManager;
+    private SensorManager sensorM;
     private Sensor accelerometer;
 
-    private float deltaXMax = 0;
-    private float deltaYMax = 0;
-    private float deltaZMax = 0;
+    private float xMaxValue = 0, yMaxValue = 0, zMaxValue;
+    private double acceleration =0.0;
+    private float changeValueX = 0, changeValueY = 0, changeValueZ = 0, Vibration = 0;
+    private TextView currentXValue, currentYValue, currentZValue, maxXValue, maxYValue, maxZValue, maxAccel;
 
-    private double acceleration =0;
-
-    private float deltaX = 0;
-    private float deltaY = 0;
-    private float deltaZ = 0;
-
-    private float vibrateThreshold = 0;
-
-    private TextView currentX, currentY, currentZ, maxX, maxY, maxZ, maxAccel;
-
-    public Vibrator v;
+    public Vibrator vibrate;
 
     final int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
@@ -49,8 +40,8 @@ public class Accelerometer extends Activity implements SensorEventListener {
     double thetaZ;
 
     public double test(){
-      //  deltaXMax =deltaX;
-        return thetaZ= Math.sin(theta)*deltaXMax;
+      //  xMaxValue =changeValueX;
+        return thetaZ= Math.sin(theta)* xMaxValue;
 
     }
     //double number = -895.25;
@@ -62,46 +53,45 @@ public class Accelerometer extends Activity implements SensorEventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeViews();
-        checkPermissions();
+        allowPermission();
 
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
+        sensorM = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        if (sensorM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER) != null) {
             // success! we have an accelerometer
 
-            accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-            sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
-            vibrateThreshold = accelerometer.getMaximumRange() / 2;
+            accelerometer = sensorM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            sensorM.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+            Vibration = accelerometer.getMaximumRange() / 2;
         } else {
-            // fai! we dont have an accelerometer!
+            // fail! we don't have an accelerometer!
             Toast.makeText(getBaseContext(), "Can't Find Data ", Toast.LENGTH_LONG).show();
         }
-
         //initialize vibration
-        v = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrate = (Vibrator) this.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     private void initializeViews() {
 
-        currentX = (TextView) findViewById(R.id.currentX);
-        currentY = (TextView) findViewById(R.id.currentY);
-        currentZ = (TextView) findViewById(R.id.currentZ);
+        currentXValue = (TextView) findViewById(R.id.currentX);
+        currentYValue = (TextView) findViewById(R.id.currentY);
+        currentZValue = (TextView) findViewById(R.id.currentZ);
 
-        maxX = (TextView) findViewById(R.id.maxX);
-        maxY = (TextView) findViewById(R.id.maxY);
-        maxZ = (TextView) findViewById(R.id.maxZ);
+        maxXValue = (TextView) findViewById(R.id.maxX);
+        maxYValue = (TextView) findViewById(R.id.maxY);
+        maxZValue = (TextView) findViewById(R.id.maxZ);
         maxAccel = (TextView) findViewById(R.id.maxAccel);
     }
 
     //onResume() register the accelerometer for listening the events
     protected void onResume() {
         super.onResume();
-        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorM.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
     }
 
     //onPause() unregister the accelerometer for stop listening the events
     protected void onPause() {
         super.onPause();
-        sensorManager.unregisterListener(this);
+        sensorM.unregisterListener(this);
     }
 
     @Override
@@ -119,29 +109,28 @@ public class Accelerometer extends Activity implements SensorEventListener {
         displayMaxValues();
                 
         // get the change of the x,y,z values of the accelerometer
-        deltaX = Math.abs(lastX - event.values[0]);
-        deltaY = Math.abs(lastY - event.values[1]);
-        deltaZ = Math.abs(lastZ - event.values[2]);
+        changeValueX = Math.abs(accelerationValueX - event.values[0]);
+        changeValueY = Math.abs(accelerationValueY - event.values[1]);
+        changeValueZ = Math.abs(accelerationValueZ - event.values[2]);
 
                 
         // if the change is below 2, it is just plain noise
-        if (deltaX < 2)
-        deltaX = 0;
-        if (deltaY < 2)
-        deltaY = 0;
-        if ((deltaX > vibrateThreshold) || (deltaY > vibrateThreshold) || (deltaZ > vibrateThreshold)) {
-            v.vibrate(50);
+        if (changeValueX < 2)
+        changeValueX = 0;
+        if (changeValueY < 2)
+        changeValueY = 0;
+        if ((changeValueX > Vibration) || (changeValueY > Vibration) || (changeValueZ > Vibration)) {
+            vibrate.vibrate(50);
         }
 
-        String entry = "\n X: " + currentX.getText().toString()  + ", Y: "+ currentY.getText().toString() + ", Z: " + currentZ.getText().toString() + "\n" +
-               test() + "\n";
+        String entry = "\n X: " + currentXValue.getText().toString()  + ", Y: "+ currentYValue.getText().toString() + ", Z: " + currentZValue.getText().toString()  +
+               ", Acceleration: " + maxAccel.getText().toString() + "\n";
         try {
 
             File sdCard = Environment.getExternalStorageDirectory();
             File dir = new File(sdCard.getAbsolutePath() + "/sean");
-            Boolean dirsMade = dir.mkdir();
-            //System.out.println(dirsMade);
-            Log.v("Accel", dirsMade.toString());
+            Boolean mkdir = dir.mkdir();
+            Log.v("Accel", mkdir.toString());
 
             File file = new File(dir, "output.csv");
             FileOutputStream f = new FileOutputStream(file, true);
@@ -150,7 +139,7 @@ public class Accelerometer extends Activity implements SensorEventListener {
                 f.write(entry.getBytes());
                 f.flush();
                 f.close();
-                Toast.makeText(getBaseContext(), "Data saved", Toast.LENGTH_LONG).show();
+                Toast.makeText(getBaseContext(), "Data Saved", Toast.LENGTH_LONG).show();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -161,48 +150,48 @@ public class Accelerometer extends Activity implements SensorEventListener {
     }
 
     private void displayCleanValues() {
-        currentX.setText("0.0");
-        currentY.setText("0.0");
-        currentZ.setText("0.0");
+        currentXValue.setText("0.0");
+        currentYValue.setText("0.0");
+        currentZValue.setText("0.0");
     }
 
     // display the current x,y,z accelerometer values
     public void displayCurrentValues() {
-        currentX.setText(Float.toString(deltaX));
-        currentY.setText(Float.toString(deltaY));
-        currentZ.setText(Float.toString(deltaZ));
+        currentXValue.setText(Float.toString(changeValueX));
+        currentYValue.setText(Float.toString(changeValueY));
+        currentZValue.setText(Float.toString(changeValueZ));
     }
 
     // display the max x,y,z accelerometer values
     public void displayMaxValues() {
-        if (deltaX > deltaXMax) {
-            deltaXMax = deltaX;
-            maxX.setText(Float.toString(deltaXMax));
+        if (changeValueX > xMaxValue) {
+            xMaxValue = changeValueX;
+            maxXValue.setText(Float.toString(xMaxValue));
         }
 
-        if (deltaY > deltaYMax) {
-            deltaYMax = deltaY;
-            maxY.setText(Float.toString(deltaYMax));
+        if (changeValueY > yMaxValue) {
+            yMaxValue = changeValueY;
+            maxYValue.setText(Float.toString(yMaxValue));
         }
 
-        if (deltaZ > deltaZMax) {
-            deltaZMax = deltaZ;
-            maxZ.setText(Float.toString(deltaZMax));
+        if (changeValueZ > zMaxValue) {
+            zMaxValue = changeValueZ;
+            maxZValue.setText(Float.toString(zMaxValue));
         }
 
-            acceleration = Math.sqrt(Math.pow(Double.parseDouble(currentX.getText().toString()), 2) +
-                    Math.pow(Double.parseDouble(currentY.getText().toString()), 2) +
-                    Math.pow(Double.parseDouble(currentZ.getText().toString()), 2));
+            acceleration = Math.sqrt(Math.pow(Double.parseDouble(currentXValue.getText().toString()), 2) +
+                    Math.pow(Double.parseDouble(currentYValue.getText().toString()), 2) +
+                    Math.pow(Double.parseDouble(currentZValue.getText().toString()), 2));
             maxAccel.setText(Double.toString(acceleration));
     }
 
-    private void checkPermissions() {
-        int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-        if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
+    private void allowPermission() {
+        int writeContactsPermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        if (writeContactsPermission != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_ASK_PERMISSIONS);
             return;
         }
-        Toast.makeText(getBaseContext(), "Permission is already granted", Toast.LENGTH_LONG).show();
+        Toast.makeText(getBaseContext(), "Permissions are already Granted", Toast.LENGTH_LONG).show();
     }
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -210,7 +199,7 @@ public class Accelerometer extends Activity implements SensorEventListener {
             case REQUEST_CODE_ASK_PERMISSIONS:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission Granted
-                    Toast.makeText(getBaseContext(), "Permission Granted", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Permission are Granted", Toast.LENGTH_LONG).show();
                 } else {
                     // Permission Denied
                     Toast.makeText(Accelerometer.this, "WRITE_EXTERNAL_STORAGE Denied", Toast.LENGTH_SHORT).show();
