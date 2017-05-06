@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sean.accelerometer">
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     android:versionCode="1"
     android:versionName="1.0" >
 
+    <!--/*****************************************************
+    * Title: Android Accelerometer Example
+ * Author: Chryssa Aliferi
+ * Site owner/sponsor: javacodegeeks
+ * Date: July 18th, 2014
+ * Code version:
+ * Availability: //https://examples.javacodegeeks.com/android/core/hardware/sensor/android-accelerometer-example/
+ (Accessed 8 November 2016)
+ * Modified: android:label=
+    *****************************************************/-->
     <uses-sdk
         android:minSdkVersion="8"
         android:targetSdkVersion="19" />
@@ -25,7 +37,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-    </application>
+        </activity><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
 
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+    </application>
+    <!--End of [non-original or refactored] code -->
 </manifest>
